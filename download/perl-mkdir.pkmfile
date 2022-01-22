@@ -1,0 +1,5 @@
+#!/usr/local/bin/perl
+my $directory = $ARGV[0];
+mkdir($directory)
+   or $!{EEXIST}
+   or die("perl-mkdir: Failed to creaty directory \"$directory\": $!\n");
