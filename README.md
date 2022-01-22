@@ -14,5 +14,5 @@ Sorry, there is no version for Mac OS aviable yet...
 ### Linux
 Open terminal and run this code:
 ```bash
-wget https://raw.githubusercontent.com/VBPROGER/pkm/main/src/pkm && chmod u+x ~/pkm && mv ~/pkm ~/.local/bin/pkm
+clear || cls || :; wget https://raw.githubusercontent.com/VBPROGER/pkm/main/src/pkm && chmod u+x ~/pkm && mv ~/pkm ~/.local/bin/pkm; clear || cls || :;
 ```
