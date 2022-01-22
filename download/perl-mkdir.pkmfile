@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/bin/perl
 my $directory = $ARGV[0];
 mkdir($directory)
    or $!{EEXIST}
