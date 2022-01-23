@@ -78,7 +78,7 @@ def check_version(warn_on_old = True, exit_on_old = False, auto_update = False, 
                 else:
                     pass
             else:
-                log('Your '+str(name.lower)+' is up-to-date.')
+                log('Your '+str(name.lower())+' is up-to-date.')
         print('======================================')
     except BaseException as e:
         logerror('Failed to check if update needed!')
@@ -219,7 +219,7 @@ def self_update(confirmation = False, custom_path = None, *args):
         logsuccess('Finished downloading update!')
 def argument_parser(*args) -> None:
     if len(args_parser) <= 1:
-        log('Invalid command! Type "'+str(name)+'" --help for more info.')
+        log('Invalid command! Type "'+str(name)+' --help" for more info.')
         return False
     try:
         Arg1 = args_parser[1]
@@ -273,10 +273,10 @@ def argument_parser(*args) -> None:
             log('Updating PKM...')
             self_update(confirmation = True)
         else:
-            log('Invalid command! Type "'+str(name)+'" --help for more info.')
+            log('Invalid command! Type "'+str(name)+' --help" for more info.')
             return False
     except BaseException as e:
-        log('Uncompleted or invalid command! Type "'+str(name)+'" --help for more info.')
+        log('Uncompleted or invalid command! Type "'+str(name)+' --help" for more info.')
         log('This may be an error: '+str(e))
         return False
 setup()
