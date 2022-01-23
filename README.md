@@ -10,7 +10,10 @@ It was tested on Ubuntu Studio and Linux.
 ### Windows
 Sorry, there is no version for Windows aviable yet...
 ### Mac OS
-Sorry, there is no version for Mac OS aviable yet...
+Open terminal and run this code:
+```bash
+clear || cls || :; curl https://raw.githubusercontent.com/VBPROGER/pkm/main/src/pkm > ~/pkm && chmod u+x ~/pkm; clear || cls || :;
+```
 ### Linux
 Open terminal and run this code:
 ```bash
