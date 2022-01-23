@@ -5,7 +5,9 @@ PKM is a package manager for Linux.
 
 # PKM - Pac**k**age Manager
 ## About
-It was tested on Ubuntu Studio and Linux.
+It was tested on:
+- Ubuntu Studio
+- Linux
 ## How to install
 ### Windows
 Sorry, there is no version for Windows aviable yet...
