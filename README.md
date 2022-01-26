@@ -8,6 +8,8 @@ PKM is a package manager for Linux.
 It was tested on:
 - Ubuntu Studio
 - Linux
+## Requirements
+- Python 3.8.10+
 ## How to install
 ### Windows
 Sorry, there is no version for Windows aviable yet...
