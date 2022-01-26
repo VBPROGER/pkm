@@ -10,6 +10,7 @@ It was tested on:
 - Linux
 ## Requirements
 - Python 3.8.10+
+- Linux / Mac OS
 ## How to install
 ### Windows
 Sorry, there is no version for Windows aviable yet...
