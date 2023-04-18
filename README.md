@@ -1,16 +1,14 @@
-# pkm
-PKM is a package manager for Linux.
-
-# ____________________________
-
-# PKM - Pac**k**age Manager
+# PKM - Package Manager
 ## About
+PKM is a package manager for Linux.
+## Tested platforms
 It was tested on:
-- Ubuntu Studio
 - Linux
+- Ubuntu Studio
 ## Requirements
 - Python 3.8.10+
 - Linux / Mac OS
+- `requests`, `stat`, `bs4`
 ## How to install
 ### Windows
 Sorry, there is no version for Windows aviable yet...

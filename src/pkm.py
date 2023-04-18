@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import requests, os, stat, subprocess, webbrowser
-from platform import system as pl
-from sys import argv as args_parser
-from bs4 import BeautifulSoup
+import requests, os, stat, subprocess # type: ignore
+from platform import system as pl # type: ignore
+from sys import argv as args_parser # type: ignore
 
 name = 'pkm'
-version = '1.0.1'
+version = '1.0.2'
 prefix = 'pkm'
+update_url = 'https://raw.githubusercontent.com/VBPROGER/pkm/main/src/pkm.py'
+
 pl = str(str(pl()).lower())
 if pl == 'linux':
     pkm_local_path = os.path.join(os.path.expanduser('~'), '.config', 'pkm')
@@ -39,46 +40,48 @@ def get_url_paths(url, ext='', params={}, *args):
     parent = [url + node.get('href') for node in soup.find_all('a') if node.get('href').endswith(ext)]
     return parent
 def setup(*args):
+    paths = []
     if pl != 'windows':
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), '.config')))
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), '.config', 'pkm')))
-        os.system('mkdir -p '+str(pkm_local_path))
-        os.system('mkdir -p '+str(pkm_local_packages_path))
-        os.system('mkdir -p '+str(pkm_local_cache_path))
-        os.system('mkdir -p '+str(pkm_local_logs_path))
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), '.local')))
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), '.local', 'bin')))
+        paths = [
+            os.path.join(os.path.expanduser('~'), '.config'),
+            os.path.join(os.path.expanduser('~'), '.config', 'pkm'),
+            pkm_local_path,
+            pkm_local_packages_path,
+            pkm_local_cache_path,
+            pkm_local_logs_path,
+            os.path.join(os.path.expanduser('~'), '.local'),
+            os.path.join(os.path.expanduser('~'), '.local', 'bin')
+        ]
     else:
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), 'AppData')))
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), 'AppData', 'Local')))
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), 'AppData', 'Local', 'PKM File Manager')))
-        os.system('mkdir -p '+str(os.path.join(os.path.expanduser('~'), 'AppData', 'Local', 'PKM File Manager', 'packages')))
-        os.system('mkdir -p '+str(pkm_local_cache_path))
-        os.system('mkdir -p '+str(pkm_local_logs_path))
-def check_version(warn_on_old = True, exit_on_old = False, auto_update = False, *args):
+        paths = [
+            os.path.join(os.path.expanduser('~'), 'AppData'),
+            os.path.join(os.path.expanduser('~'), 'AppData', 'Local'),
+            os.path.join(os.path.expanduser('~'), 'AppData', 'Local', 'PKM File Manager'),
+            os.path.join(os.path.expanduser('~'), 'AppData', 'Local', 'PKM File Manager', 'packages'),
+            pkm_local_cache_path,
+            pkm_local_logs_path,
+        ]
+    for path in paths:
+        os.system('mkdir -p '+str(path))
+def check_version(warn_on_old: bool = True, exit_on_old: bool = False, auto_update: bool = False, *args):
     try:
-        aviable_version = get_current_version()
-        aviable_version = str(aviable_version)
-        print('======================================')
-        log('Aviable and newest version: ' + aviable_version)
+        available_version = get_current_version()
+        available_version = str(available_version)
+        log('Available version: ' + available_version)
         log('Current version: ' + version)
         if warn_on_old == True:
-            if version != aviable_version:
-                logerror('WARNING: YOUR '+str(name.upper())+' IS OUTDATED.')
-                log('Update it using the "'+str(name.lower())+' update" command,')
-                log("or if it's broken go to https://github.com/VBPROGER/pkm and download "+str(name.lower())+' again.')
-                if auto_update == True:
+            if version != available_version:
+                if auto_update:
                     log('Autoupdate is enabled!')
                     self_update()
                     log('Updated. Now start the program again.')
                     exit(0)
-                if exit_on_old == True:
+                elif exit_on_old:
                     logerror('To keep using '+str(name.lower())+', please update it.')
                     exit(0)
-                else:
-                    pass
+                else: pass
             else:
-                log('Your '+str(name.lower())+' is up-to-date.')
+                log('Your ' + str(name.lower() + ' is up-to-date.'))
         print('======================================')
     except BaseException as e:
         logerror('Failed to check if update needed!')
@@ -91,11 +94,11 @@ def no_run_flag_create(*args):
         f.close()
 def logs_create(*args):
     with open(os.path.join(pkm_local_logs_path, 'last-log.log'), 'w') as f:
-        f.write('admin.pkm$>> Created logs')
+        f.write('Created logs')
         f.close()
 def log(string = '', *args):
-    if not string == '' or string == None:
-        CONTENT = str(name)+': '+str(string)
+    if string:
+        CONTENT = str(name) + ': ' + str(string)
         print(CONTENT)
         with open(os.path.join(pkm_local_logs_path, 'last-log.log'), 'a+') as f:
             f.write(CONTENT)
@@ -189,8 +192,7 @@ def get_installed_packages_list(*args):
     except BaseException:
         logerror('Failed to get list of installed packages')
         return False
-def self_update(confirmation = False, custom_path = None, *args):
-    update_url = 'https://raw.githubusercontent.com/VBPROGER/pkm/main/src/pkm'
+def self_update(confirmation: bool = False, custom_path: str = '', *args):
     if confirmation:
         log('Updating...')
         try:
@@ -230,8 +232,7 @@ def argument_parser(*args) -> None:
         Arg3 = Arg3.lower()
         Arg4 = args_parser[4]
         Arg4 = Arg4.lower()
-    except BaseException:
-        pass
+    except BaseException: pass
     if Arg1 == '--help' or Arg1 == '-h' or Arg1 == '--h':
         n = 'Command: ' + str(name) + ''
         print(str(name)+'.help: List of aviable commands')
@@ -260,11 +261,10 @@ def argument_parser(*args) -> None:
             uninstallpkg(pkg = Arg2)
         elif Arg1 == 'installed_list':
             get_installed_packages_list()
-        elif Arg1 == 'aviable_list':
+        elif Arg1 == 'available_list':
             url = 'https://github.com/VBPROGER/pkm/tree/main/download'
             log('You can view aviable packages on GitHub:')
-            print('Copy and paste this in new tab (in the browser) or just wait for it to open -> ' + str(url))
-            webbrowser.open(str(url))
+            print('Copy and paste this in new tab: ' + str(url))
         elif Arg1 == 'clear_logs':
             log('Clearing logs, please wait...')
             os.remove(str(os.path.join(pkm_local_logs_path, 'last-log.log')))
